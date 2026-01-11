@@ -1,0 +1,222 @@
+---
+import { allWorks } from "../../data/works";
+/**
+ * Página de Obra - Versión Español
+ *
+ * Muestra la galería completa de obras con filtrado por categoría.
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+/**
+ * Categorías disponibles para filtrado
+ */
+const categories = [
+	{ id: "all", name: "Todas" },
+	{ id: "pintura", name: "Pintura" },
+	{ id: "técnica-mixta", name: "Técnica Mixta" },
+	{ id: "escultura", name: "Escultura" },
+];
+---
+
+<BaseLayout 
+  title="Obra | raissagr" 
+  description="Explora la colección de obras de arte de Raissa García. Pintura, técnica mixta y escultura."
+>
+  <!-- Header -->
+  <section class="py-20 md:py-28">
+    <div class="container-custom">
+      <div class="max-w-3xl mx-auto text-center">
+        <p class="subtitle text-[#EA559D]">Portafolio de arte y pintura</p>
+        <h1 class="text-neutral-900 mb-6">Obra</h1>
+        <p class="lead max-w-2xl mx-auto">
+          Una colección de cuadros que abarcan diferentes etapas y estilos, 
+          donde cada pieza es un diálogo entre la emoción y la materia.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Filtros por categoría -->
+  <section class="pb-12 border-b border-neutral-200">
+    <div class="container-custom">
+      <div class="flex flex-wrap justify-center gap-4 md:gap-8">
+        {categories.map((category) => (
+          <button 
+            class:list={[
+              'text-sm tracking-widest uppercase transition-colors',
+              category.id === 'all' 
+                ? 'text-[#EA559D] font-medium' 
+                : 'text-neutral-400 hover:text-[#EA559D]'
+            ]}
+            data-category={category.id}
+          >
+            {category.name}
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Galería de Obras -->
+  <section class="pt-8 md:pt-12 pb-16 md:pb-24">
+    <div class="container-wide">
+      <!-- Mensaje cuando no hay obras en la categoría seleccionada -->
+      <div id="empty-category-message" class="hidden text-center py-16">
+        <div class="max-w-md mx-auto">
+          <div class="w-20 h-20 mx-auto mb-6 rounded-full bg-[#FAD8E9] flex items-center justify-center">
+            <svg class="w-10 h-10 text-[#EA559D]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+            </svg>
+          </div>
+          <h3 class="font-serif text-2xl text-neutral-800 mb-3">Nuevas creaciones en camino</h3>
+          <p class="text-neutral-600 leading-relaxed">
+            Esta categoría está esperando nuevas piezas. El arte necesita su tiempo... 
+            mientras tanto, explora las otras colecciones.
+          </p>
+        </div>
+      </div>
+      
+      {allWorks.length > 0 ? (
+        <div id="works-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+          {allWorks.map((work) => (
+            <a 
+              href={`/obra/${work.slug}`} 
+              class="gallery-item group relative aspect-[4/3] overflow-hidden block"
+              data-work-category={work.data.category.toLowerCase().replace(/\s+/g, '-')}
+            >
+              <img 
+                src={work.data.coverImage} 
+                alt={work.data.title}
+                class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <!-- Overlay con mejor contraste -->
+              <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end">
+                <div class="p-6 w-full">
+                  <span class="inline-block px-3 py-1 text-xs tracking-wider uppercase bg-[#EA559D] text-white rounded-sm mb-3">{work.data.category}</span>
+                  <h3 class="font-serif text-2xl text-white drop-shadow-lg">{work.data.title}</h3>
+                  <p class="text-sm text-white/90 mt-1">{work.data.year}</p>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <!-- Estado vacío -->
+        <div class="text-center py-24">
+          <div class="max-w-md mx-auto">
+            <div class="w-24 h-24 mx-auto mb-8 rounded-full bg-neutral-100 flex items-center justify-center">
+              <svg class="w-12 h-12 text-neutral-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h2 class="font-serif text-3xl text-neutral-900 mb-4">
+              La galería está vacía
+            </h2>
+            <p class="text-neutral-600 mb-8">
+              Pronto encontrarás aquí mi colección de obras. 
+              Mientras tanto, puedes contactarme para conocer más sobre mi trabajo.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+              <a href="/keystatic" class="btn-primary">
+                Añadir obra
+              </a>
+              <a href="/contacto" class="btn-outline">
+                Contactar
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="section bg-neutral-50">
+    <div class="container-narrow text-center">
+      <h2 class="text-neutral-900 mb-4">¿Interesado en una pieza?</h2>
+      <p class="text-lg text-neutral-600 mb-8 max-w-xl mx-auto">
+        Si alguna obra ha captado tu atención o deseas encargar un proyecto personalizado, 
+        estaré encantada de conversar contigo.
+      </p>
+      <a href="/contacto" class="btn-primary">
+        Contactar
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  /**
+   * Script de filtrado de obras por categoría
+   * 
+   * Maneja la interacción con los botones de filtro y muestra/oculta
+   * las obras según la categoría seleccionada.
+   */
+  document.addEventListener('astro:page-load', () => {
+    const filterButtons = document.querySelectorAll('[data-category]');
+    const galleryItems = document.querySelectorAll('[data-work-category]');
+    
+    if (!filterButtons.length || !galleryItems.length) return;
+    
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const selectedCategory = button.getAttribute('data-category');
+        
+        // Actualizar estilos de botones
+        filterButtons.forEach(btn => {
+          btn.classList.remove('text-[#EA559D]', 'font-medium');
+          btn.classList.add('text-neutral-400');
+        });
+        button.classList.remove('text-neutral-400');
+        button.classList.add('text-[#EA559D]', 'font-medium');
+        
+        // Filtrar obras con animación
+        let visibleCount = 0;
+        
+        galleryItems.forEach(item => {
+          const itemCategory = item.getAttribute('data-work-category');
+          
+          if (selectedCategory === 'all' || itemCategory === selectedCategory) {
+            visibleCount++;
+            item.style.display = 'block';
+            item.style.opacity = '0';
+            item.style.transform = 'scale(0.95)';
+            
+            requestAnimationFrame(() => {
+              item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              item.style.opacity = '1';
+              item.style.transform = 'scale(1)';
+            });
+          } else {
+            item.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            item.style.opacity = '0';
+            item.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+              item.style.display = 'none';
+            }, 300);
+          }
+        });
+        
+        // Mostrar mensaje si no hay obras visibles
+        const emptyMessage = document.getElementById('empty-category-message');
+        if (emptyMessage) {
+          if (visibleCount === 0) {
+            emptyMessage.classList.remove('hidden');
+            emptyMessage.style.opacity = '0';
+            requestAnimationFrame(() => {
+              emptyMessage.style.transition = 'opacity 0.4s ease';
+              emptyMessage.style.opacity = '1';
+            });
+          } else {
+            emptyMessage.style.opacity = '0';
+            setTimeout(() => {
+              emptyMessage.classList.add('hidden');
+            }, 300);
+          }
+        }
+      });
+    });
+  });
+</script>

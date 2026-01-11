@@ -1,0 +1,111 @@
+---
+import { allWorks } from "../../data/works";
+/**
+ * Página de Detalle de Obra - Versión Español
+ *
+ * Muestra los detalles de una obra individual.
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+	return allWorks.map((work) => ({
+		params: { slug: work.slug },
+		props: { work },
+	}));
+}
+
+const { work } = Astro.props;
+---
+
+<BaseLayout 
+  title={`${work.data.title} | raissagr`}
+  description={work.data.description}
+  image={work.data.coverImage}
+>
+  <!-- Navegación de vuelta -->
+  <section class="py-8 border-b border-neutral-100">
+    <div class="container-custom">
+      <a href="/obra" class="inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-[#EA559D] transition-colors">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+        </svg>
+        Volver a la galería
+      </a>
+    </div>
+  </section>
+  
+  <!-- Contenido principal -->
+  <section class="pt-8 md:pt-12 pb-16 md:pb-24">
+    <div class="container-custom">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20">
+        <!-- Imagen -->
+        <div class="relative">
+          <img 
+            src={work.data.coverImage} 
+            alt={work.data.title}
+            class="w-full aspect-[4/5] object-cover"
+          />
+          <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-[#EA559D] -z-10"></div>
+        </div>
+        
+        <!-- Información -->
+        <div class="flex flex-col justify-center">
+          <span class="tag mb-6">{work.data.category}</span>
+          <h1 class="font-serif text-4xl md:text-5xl text-neutral-900 mb-4">{work.data.title}</h1>
+          <p class="text-xl text-neutral-500 mb-8">{work.data.year}</p>
+          
+          <p class="text-lg text-neutral-600 leading-relaxed mb-8">
+            {work.data.description}
+          </p>
+          
+          <!-- Detalles técnicos -->
+          <div class="border-t border-neutral-200 pt-8 space-y-4">
+            <div class="flex justify-between">
+              <span class="text-sm text-neutral-500 uppercase tracking-wider">Dimensiones</span>
+              <span class="text-neutral-900">{work.data.dimensions}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sm text-neutral-500 uppercase tracking-wider">Técnica</span>
+              <span class="text-neutral-900">{work.data.technique}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sm text-neutral-500 uppercase tracking-wider">Disponibilidad</span>
+              <span class:list={[
+                work.data.available ? 'text-green-600' : 'text-neutral-400'
+              ]}>
+                {work.data.available ? 'Disponible' : 'Vendida'}
+              </span>
+            </div>
+          </div>
+          
+          <!-- CTA -->
+          <div class="mt-10">
+            <a href="/contacto" class="btn-primary">
+              Consultar sobre esta obra
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Otras obras -->
+  <section class="section bg-neutral-50">
+    <div class="container-custom">
+      <h2 class="text-center text-neutral-900 mb-12">Otras obras</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {allWorks.filter(w => w.slug !== work.slug).slice(0, 4).map(otherWork => (
+          <a href={`/obra/${otherWork.slug}`} class="group relative aspect-square overflow-hidden">
+            <img 
+              src={otherWork.data.coverImage} 
+              alt={otherWork.data.title}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300"></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

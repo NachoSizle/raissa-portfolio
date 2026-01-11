@@ -1,0 +1,44 @@
+---
+/**
+ * Página de agradecimiento tras enviar el formulario de contacto.
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout 
+  title="Mensaje Enviado | raissagr" 
+  description="Tu mensaje ha sido enviado correctamente."
+  noIndex={true}
+>
+  <section class="min-h-[70vh] flex items-center justify-center">
+    <div class="container-custom">
+      <div class="max-w-xl mx-auto text-center">
+        <!-- Icono de éxito -->
+        <div class="w-16 h-16 mx-auto mb-8 flex items-center justify-center rounded-full border border-neutral-200 text-neutral-900">
+          <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        
+        <h1 class="text-neutral-900 mb-6">Gracias por escribirme</h1>
+        
+        <p class="lead mb-4">
+          He recibido tu mensaje.
+        </p>
+        
+        <p class="text-neutral-600 mb-12">
+          Te responderé personalmente lo antes posible.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/" class="btn-primary">
+            Volver al inicio
+          </a>
+          <a href="/obra" class="btn-outline">
+            Ver obra
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

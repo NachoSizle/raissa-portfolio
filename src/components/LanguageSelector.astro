@@ -1,0 +1,89 @@
+---
+/**
+ * Componente Selector de Idioma
+ *
+ * Permite alternar entre español e inglés.
+ * Muestra banderas/códigos de idioma de forma elegante.
+ */
+import {
+	getLangFromUrl,
+	getLocalizedUrl,
+	type Language,
+	languages,
+} from "../i18n";
+
+const currentLang = getLangFromUrl(Astro.url);
+---
+
+<div class="relative" id="lang-selector">
+  <button 
+    type="button"
+    class="flex items-center gap-1.5 text-sm font-medium text-neutral-600 hover:text-[#EA559D] transition-colors uppercase tracking-wider"
+    aria-label="Cambiar idioma"
+    aria-expanded="false"
+    id="lang-toggle"
+  >
+    <span class="current-lang">{currentLang.toUpperCase()}</span>
+    <svg class="w-3.5 h-3.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+  
+  <div 
+    class="absolute right-0 top-full mt-2 py-2 bg-white border border-neutral-200 shadow-lg min-w-[100px] hidden"
+    id="lang-dropdown"
+  >
+    {Object.entries(languages).map(([lang, label]) => (
+      <a 
+        href={getLocalizedUrl(Astro.url, lang as Language)}
+        class:list={[
+          'block px-4 py-2 text-sm transition-colors',
+          currentLang === lang 
+            ? 'text-[#EA559D] font-medium bg-[#FAD8E9]/30' 
+            : 'text-neutral-600 hover:text-[#EA559D] hover:bg-neutral-50'
+        ]}
+        data-lang={lang}
+      >
+        {label}
+      </a>
+    ))}
+  </div>
+</div>
+
+<script>
+  /**
+   * Lógica del selector de idioma
+   * Maneja el toggle del dropdown
+   */
+  document.addEventListener('astro:page-load', () => {
+    const toggle = document.getElementById('lang-toggle');
+    const dropdown = document.getElementById('lang-dropdown');
+    
+    if (toggle && dropdown) {
+      toggle.addEventListener('click', () => {
+        const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+        toggle.setAttribute('aria-expanded', (!isExpanded).toString());
+        dropdown.classList.toggle('hidden');
+        
+        // Rotar el icono
+        const svg = toggle.querySelector('svg');
+        if (svg) {
+          svg.style.transform = isExpanded ? '' : 'rotate(180deg)';
+        }
+      });
+      
+      // Cerrar al hacer click fuera
+      document.addEventListener('click', (e) => {
+        const selector = document.getElementById('lang-selector');
+        if (selector && !selector.contains(e.target as Node)) {
+          toggle.setAttribute('aria-expanded', 'false');
+          dropdown.classList.add('hidden');
+          const svg = toggle.querySelector('svg');
+          if (svg) {
+            svg.style.transform = '';
+          }
+        }
+      });
+    }
+  });
+</script>

@@ -1,0 +1,181 @@
+---
+import { translations } from "../../i18n";
+/**
+ * About Page - English Version
+ *
+ * Biographical information and artistic career.
+ * Design inspired by raissagr.com
+ */
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const lang = "en";
+const tr = translations[lang];
+
+/**
+ * Exhibitions and achievements
+ */
+const exhibitions = [
+	{
+		year: "2024",
+		title: "MUA de Alicante",
+		type: "Group exhibition",
+	},
+	{
+		year: "2024",
+		title: "Palau Altea",
+		type: "Solo exhibition",
+	},
+];
+
+/**
+ * Working techniques
+ */
+const techniques = ["Oil", "Acrylic", "Mixed media", "Wood", "Sculpture"];
+---
+
+<BaseLayout 
+  title="About | raissagr" 
+  description="Meet Raissa García, visual artist in Altea, Spain. Career, exhibitions and creative process."
+>
+  <!-- Header -->
+  <section class="py-20 md:py-28">
+    <div class="container-custom">
+      <div class="max-w-3xl mx-auto text-center">
+        <p class="subtitle text-[#EA559D]">{tr.sobreMi.titulo}</p>
+        <h1 class="text-neutral-900">Raissa García</h1>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Introduction -->
+  <section class="pb-20">
+    <div class="container-narrow">
+      <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-start">
+        <!-- Profile Image -->
+        <div class="relative">
+          <div class="aspect-[4/5] bg-neutral-100 overflow-hidden">
+            <img 
+              src="/images/raissa-garcia.jpg" 
+              alt="Raissa García - Visual Artist" 
+              class="w-full h-full object-cover object-top"
+            />
+          </div>
+          <p class="mt-4 text-sm text-neutral-500 italic text-center">
+            Altea, Spain
+          </p>
+        </div>
+        
+        <!-- Text -->
+        <div>
+          <p class="font-serif text-2xl md:text-3xl text-neutral-800 leading-relaxed mb-6">
+            {tr.sobreMi.intro}
+          </p>
+          
+          <div class="space-y-4 text-neutral-600">
+            <p>
+              {tr.home.trabajoNace}
+            </p>
+            <p>
+              I develop a practice that combines the abstract and the figurative 
+              to build my own inner universe.
+            </p>
+            <p>
+              {tr.home.pintoParaEntender}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Artistic Approach -->
+  <section class="section bg-neutral-50">
+    <div class="container-narrow">
+      <div class="text-center mb-16">
+        <p class="subtitle text-[#EA559D]">{tr.sobreMi.propuesta}</p>
+        <h2 class="text-neutral-900">Art from emotion and matter</h2>
+      </div>
+      
+      <div class="prose-custom max-w-3xl mx-auto text-center">
+        <p class="text-lg text-neutral-600 leading-relaxed">
+          {tr.sobreMi.propuestaTexto}
+        </p>
+        <p class="text-lg text-neutral-600 leading-relaxed">
+          Each project proposes a visual experience that doesn't seek answers, but resonances. 
+          Fragments, pauses, errors, and layers shape a production that interweaves the intimate with the collective.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Techniques -->
+  <section class="section">
+    <div class="container-narrow">
+      <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+        <div>
+          <p class="subtitle text-[#EA559D]">{tr.sobreMi.tecnicas}</p>
+          <h2 class="text-neutral-900 mb-6">Constant material exploration</h2>
+          <p class="text-lg text-neutral-600 leading-relaxed">
+            {tr.sobreMi.tecnicasTexto}
+          </p>
+        </div>
+        
+        <div class="flex flex-wrap gap-3">
+          {techniques.map((technique) => (
+            <span class="tag">{technique}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Exhibitions -->
+  <section class="section bg-neutral-50">
+    <div class="container-narrow">
+      <div class="text-center mb-16">
+        <p class="subtitle text-[#EA559D]">{tr.sobreMi.trayectoria}</p>
+        <h2 class="text-neutral-900">Exhibitions</h2>
+      </div>
+      
+      <div class="max-w-xl mx-auto">
+        {exhibitions.map((exhibition, index) => (
+          <div 
+            class="py-6 border-b border-neutral-200 last:border-0"
+            style={`animation-delay: ${index * 100}ms`}
+          >
+            <div class="flex items-baseline justify-between gap-4">
+              <div>
+                <h3 class="font-serif text-xl text-neutral-900">{exhibition.title}</h3>
+                <p class="text-sm text-neutral-500">{exhibition.type}</p>
+              </div>
+              <span class="text-sm text-neutral-400 font-medium">{exhibition.year}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <p class="text-center text-sm text-neutral-500 mt-8">
+        {tr.sobreMi.trayectoriaTexto}
+      </p>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="section">
+    <div class="container-narrow text-center">
+      <h2 class="text-neutral-900 mb-4">Would you like to see my work?</h2>
+      <p class="text-lg text-neutral-600 mb-10 max-w-xl mx-auto">
+        Explore my collection of works or contact me for custom projects 
+        and artistic collaborations.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/en/work" class="btn-primary">
+          {tr.home.verObra}
+        </a>
+        <a href="/en/contact" class="btn-outline">
+          {tr.nav.contacto}
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

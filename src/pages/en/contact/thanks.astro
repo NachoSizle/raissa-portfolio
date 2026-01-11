@@ -1,0 +1,50 @@
+---
+import { translations } from "../../../i18n";
+/**
+ * Thank You Page - English Version
+ *
+ * Displayed after submitting the contact form.
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const lang = "en";
+const tr = translations[lang];
+---
+
+<BaseLayout 
+  title="Message Sent | raissagr" 
+  description="Your message has been sent successfully."
+  noIndex={true}
+>
+  <section class="min-h-[70vh] flex items-center justify-center">
+    <div class="container-custom">
+      <div class="max-w-xl mx-auto text-center">
+        <!-- Success Icon -->
+        <div class="w-16 h-16 mx-auto mb-8 flex items-center justify-center rounded-full border border-neutral-200 text-neutral-900">
+          <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        
+        <h1 class="text-neutral-900 mb-6">{tr.contacto.gracias}</h1>
+        
+        <p class="lead mb-4">
+          I have received your message.
+        </p>
+        
+        <p class="text-neutral-600 mb-12">
+          {tr.contacto.graciasDesc}
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="/en" class="btn-primary">
+            {tr.contacto.volverInicio}
+          </a>
+          <a href="/en/work" class="btn-outline">
+            {tr.home.verObra}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

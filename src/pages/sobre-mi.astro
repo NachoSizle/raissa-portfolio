@@ -1,0 +1,183 @@
+---
+/**
+ * Página Sobre Mí
+ *
+ * Información biográfica y trayectoria artística.
+ * Diseño inspirado en raissagr.com
+ */
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+/**
+ * Exposiciones y logros destacados
+ */
+const exhibitions = [
+	{
+		year: "2024",
+		title: "MUA de Alicante",
+		type: "Exposición colectiva",
+	},
+	{
+		year: "2024",
+		title: "Palau Altea",
+		type: "Exposición individual",
+	},
+];
+
+/**
+ * Técnicas de trabajo
+ */
+const techniques = ["Óleo", "Acrílico", "Técnica mixta", "Madera", "Escultura"];
+---
+
+<BaseLayout 
+  title="Sobre mí | raissagr" 
+  description="Conoce a Raissa García, artista visual en Altea, España. Trayectoria, exposiciones y proceso creativo."
+>
+  <!-- Header -->
+  <section class="py-20 md:py-28">
+    <div class="container-custom">
+      <div class="max-w-3xl mx-auto text-center">
+        <p class="subtitle text-[#EA559D]">Sobre mí</p>
+        <h1 class="text-neutral-900">Raissa García</h1>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Introducción -->
+  <section class="pb-20">
+    <div class="container-narrow">
+      <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-start">
+        <!-- Imagen de Perfil -->
+        <div class="relative">
+          <div class="aspect-[4/5] bg-neutral-100 overflow-hidden">
+            <img 
+              src="/images/raissa-garcia.jpg" 
+              alt="Raissa García - Artista Visual" 
+              class="w-full h-full object-cover object-top"
+            />
+          </div>
+          <p class="mt-4 text-sm text-neutral-500 italic text-center">
+            Altea, España
+          </p>
+        </div>
+        
+        <!-- Texto -->
+        <div>
+          <p class="font-serif text-2xl md:text-3xl text-neutral-800 leading-relaxed mb-6">
+            Soy Raissa, artista visual apasionada por explorar la mente, la identidad 
+            y todo aquello que se mueve entre lo tangible y lo emocional.
+          </p>
+          
+          <div class="space-y-4 text-neutral-600">
+            <p>
+              Mi trabajo nace de la experimentación constante y del impulso por transformar 
+              sensaciones en obras que conecten con quien las mira.
+            </p>
+            <p>
+              Desarrollo una práctica que combina lo abstracto y lo figurativo 
+              para construir un universo interior propio.
+            </p>
+            <p>
+              Pinto para entender, para sentir y para generar un diálogo sincero 
+              a través del color, el símbolo y la intuición.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Propuesta artística -->
+  <section class="section bg-neutral-50">
+    <div class="container-narrow">
+      <div class="text-center mb-16">
+        <p class="subtitle text-[#EA559D]">Mi propuesta</p>
+        <h2 class="text-neutral-900">Arte desde la emoción y la materia</h2>
+      </div>
+      
+      <div class="prose-custom max-w-3xl mx-auto text-center">
+        <p class="text-lg text-neutral-600 leading-relaxed">
+          La obra de Raissa García se formula desde la escucha interna y la acción plástica. 
+          Su trabajo investiga la identidad y las emociones mediante el gesto, la materia y el tiempo.
+        </p>
+        <p class="text-lg text-neutral-600 leading-relaxed">
+          Cada proyecto propone una experiencia visual que no busca respuestas, sino resonancias. 
+          Fragmentos, pausas, errores y capas dan forma a una producción que entrelaza lo íntimo con lo colectivo.
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Técnicas -->
+  <section class="section">
+    <div class="container-narrow">
+      <div class="grid md:grid-cols-2 gap-12 md:gap-20 items-center">
+        <div>
+          <p class="subtitle text-[#EA559D]">Técnicas</p>
+          <h2 class="text-neutral-900 mb-6">Exploración material constante</h2>
+          <p class="text-lg text-neutral-600 leading-relaxed">
+            Trabajo con técnicas mixtas, madera, óleo, acrílico y escultura 
+            desde un enfoque experimental.
+          </p>
+        </div>
+        
+        <div class="flex flex-wrap gap-3">
+          {techniques.map((technique) => (
+            <span class="tag">{technique}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Exposiciones -->
+  <section class="section bg-neutral-50">
+    <div class="container-narrow">
+      <div class="text-center mb-16">
+        <p class="subtitle text-[#EA559D]">Trayectoria</p>
+        <h2 class="text-neutral-900">Exposiciones</h2>
+      </div>
+      
+      <div class="max-w-xl mx-auto">
+        {exhibitions.map((exhibition, index) => (
+          <div 
+            class="py-6 border-b border-neutral-200 last:border-0"
+            style={`animation-delay: ${index * 100}ms`}
+          >
+            <div class="flex items-baseline justify-between gap-4">
+              <div>
+                <h3 class="font-serif text-xl text-neutral-900">{exhibition.title}</h3>
+                <p class="text-sm text-neutral-500">{exhibition.type}</p>
+              </div>
+              <span class="text-sm text-neutral-400 font-medium">{exhibition.year}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+      
+      <p class="text-center text-sm text-neutral-500 mt-8">
+        Con exposiciones en espacios como el MUA de Alicante y Palau Altea, 
+        mi obra crece con coherencia conceptual y material.
+      </p>
+    </div>
+  </section>
+  
+  <!-- CTA -->
+  <section class="section">
+    <div class="container-narrow text-center">
+      <h2 class="text-neutral-900 mb-4">¿Te gustaría conocer mi trabajo?</h2>
+      <p class="text-lg text-neutral-600 mb-10 max-w-xl mx-auto">
+        Explora mi colección de obras o contacta conmigo para proyectos personalizados 
+        y colaboraciones artísticas.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/obra" class="btn-primary">
+          Ver obra
+        </a>
+        <a href="/contacto" class="btn-outline">
+          Contactar
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

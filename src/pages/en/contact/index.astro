@@ -1,0 +1,138 @@
+---
+import ContactForm from "../../../components/ContactForm.astro";
+import { translations } from "../../../i18n";
+/**
+ * Contact Page - English Version
+ *
+ * Contact form and information.
+ * Design inspired by raissagr.com
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const lang = "en";
+const tr = translations[lang];
+
+/**
+ * Contact information
+ */
+const contactInfo = {
+	location: "Altea, Spain (03590)",
+	email: "raissa.g.rodriguez.art@gmail.com",
+	instagram: "@raissagr.art",
+	instagramUrl: "https://instagram.com/raissagr.art",
+};
+---
+
+<BaseLayout 
+  title="Contact | raissagr" 
+  description="Interested in a piece or custom project? Contact Raissa García, visual artist in Altea, Spain."
+>
+  <!-- Header -->
+  <section class="py-20 md:py-28">
+    <div class="container-custom">
+      <div class="max-w-3xl mx-auto text-center">
+        <p class="subtitle text-[#EA559D]">{tr.contacto.titulo}</p>
+        <h1 class="text-neutral-900 mb-6">{tr.contacto.subtitulo}</h1>
+        <p class="lead max-w-2xl mx-auto">
+          {tr.contacto.intro}
+        </p>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Main Content -->
+  <section class="pb-20">
+    <div class="container-custom">
+      <div class="grid lg:grid-cols-2 gap-16 lg:gap-24">
+        <!-- Contact Information -->
+        <div>
+          <div class="mb-12">
+            <p class="subtitle text-[#EA559D]">Information</p>
+            <h2 class="text-neutral-900 mb-8">How to reach me</h2>
+          </div>
+          
+          <div class="space-y-10">
+            <!-- Location -->
+            <div>
+              <h3 class="text-xs font-medium tracking-widest uppercase text-neutral-400 mb-3">
+                Location
+              </h3>
+              <p class="text-lg text-neutral-700">
+                {contactInfo.location}
+              </p>
+            </div>
+            
+            <!-- Email -->
+            <div>
+              <h3 class="text-xs font-medium tracking-widest uppercase text-neutral-400 mb-3">
+                {tr.contacto.email}
+              </h3>
+              <a 
+                href={`mailto:${contactInfo.email}`}
+                class="text-lg text-neutral-900 hover:text-[#EA559D] transition-colors"
+              >
+                {contactInfo.email}
+              </a>
+            </div>
+            
+            <!-- Instagram -->
+            <div>
+              <h3 class="text-xs font-medium tracking-widest uppercase text-neutral-400 mb-3">
+                {tr.contacto.instagram}
+              </h3>
+              <a 
+                href={contactInfo.instagramUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-lg text-neutral-900 hover:text-[#EA559D] transition-colors inline-flex items-center gap-2"
+              >
+                {contactInfo.instagram}
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            </div>
+          </div>
+          
+          <div class="divider my-12"></div>
+          
+          <!-- Additional Message -->
+          <div class="bg-neutral-50 p-8">
+            <p class="font-serif text-lg text-neutral-700 italic leading-relaxed">
+              "I love meeting people who connect with my work. 
+              Don't hesitate to write to me, I personally respond to every message."
+            </p>
+            <p class="mt-4 text-sm text-neutral-500">— Raissa</p>
+          </div>
+        </div>
+        
+        <!-- Form -->
+        <div>
+          <div class="mb-12">
+            <p class="subtitle">{tr.contacto.mensajeLabel}</p>
+            <h2 class="text-neutral-900 mb-4">{tr.home.escribeme}</h2>
+            <p class="text-neutral-600">
+              Tell me about yourself and how I can help you. 
+              I'll respond as soon as possible.
+            </p>
+          </div>
+          
+          <ContactForm lang="en" />
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Map placeholder -->
+  <section class="h-80 bg-neutral-100 relative overflow-hidden">
+    <div class="absolute inset-0 flex items-center justify-center text-neutral-300">
+      <div class="text-center">
+        <svg class="w-16 h-16 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        <p class="text-sm font-medium">Altea, Spain</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

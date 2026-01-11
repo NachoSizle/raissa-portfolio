@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /b \"C:\\\\Users\\\\anxoo\\\\Documents\\\\Development\\\\Astro\\\\raissa-portfolio\")"
+    ]
+  }
+}

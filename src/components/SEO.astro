@@ -1,0 +1,56 @@
+---
+/**
+ * Componente SEO
+ *
+ * Gestiona todas las meta tags para optimización de motores de búsqueda
+ * y redes sociales (Open Graph, Twitter Cards).
+ *
+ * @param {string} title - Título de la página
+ * @param {string} description - Descripción de la página
+ * @param {string} image - URL de la imagen para compartir (Open Graph)
+ * @param {string} type - Tipo de contenido ('website' | 'article')
+ * @param {boolean} noIndex - Si es true, indica a los buscadores que no indexen la página
+ */
+interface Props {
+	title: string;
+	description?: string;
+	image?: string;
+	type?: "website" | "article";
+	noIndex?: boolean;
+}
+
+const {
+	title,
+	description = "Portafolio creativo de Raissa García - Arte y pintura contemporánea",
+	image = "/og-image.jpg",
+	type = "website",
+	noIndex = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImageURL = new URL(image, Astro.site);
+---
+
+<!-- Primary Meta Tags -->
+<title>{title}</title>
+<meta name="title" content={title} />
+<meta name="description" content={description} />
+
+{noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Canonical URL -->
+<link rel="canonical" href={canonicalURL} />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={socialImageURL} />
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image" />
+<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:title" content={title} />
+<meta property="twitter:description" content={description} />
+<meta property="twitter:image" content={socialImageURL} />

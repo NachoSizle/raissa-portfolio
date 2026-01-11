@@ -1,0 +1,132 @@
+---
+import { allWorks } from "../../../data/works";
+import { translations } from "../../../i18n";
+/**
+ * Work Detail Page - English Version
+ *
+ * Displays individual work details with translated content.
+ */
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const lang = "en";
+const tr = translations[lang];
+
+export async function getStaticPaths() {
+	return allWorks.map((work) => ({
+		params: { slug: work.slug },
+		props: { work },
+	}));
+}
+
+const { work } = Astro.props;
+
+// Get translated work info
+const slugKey = work.slug.replace(/-([a-z])/g, (_: string, l: string) =>
+	l.toUpperCase(),
+) as keyof typeof tr.works;
+const workTranslation = tr.works[slugKey];
+const translatedTitle = workTranslation?.title || work.data.title;
+const translatedDescription =
+	workTranslation?.description || work.data.description;
+const translatedCategory =
+	work.data.category === "Técnica Mixta"
+		? tr.obra.tecnicaMixta
+		: work.data.category === "Pintura"
+			? tr.obra.pintura
+			: work.data.category === "Escultura"
+				? tr.obra.escultura
+				: work.data.category;
+---
+
+<BaseLayout 
+  title={`${translatedTitle} | raissagr`}
+  description={translatedDescription}
+  image={work.data.coverImage}
+>
+  <!-- Back Navigation -->
+  <section class="py-8 border-b border-neutral-100">
+    <div class="container-custom">
+      <a href="/en/work" class="inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-[#EA559D] transition-colors">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+        </svg>
+        {tr.obraDetalle.volverGaleria}
+      </a>
+    </div>
+  </section>
+  
+  <!-- Main Content -->
+  <section class="pt-8 md:pt-12 pb-16 md:pb-24">
+    <div class="container-custom">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-20">
+        <!-- Image -->
+        <div class="relative">
+          <img 
+            src={work.data.coverImage} 
+            alt={translatedTitle}
+            class="w-full aspect-[4/5] object-cover"
+          />
+          <div class="absolute -bottom-4 -right-4 w-24 h-24 bg-[#EA559D] -z-10"></div>
+        </div>
+        
+        <!-- Information -->
+        <div class="flex flex-col justify-center">
+          <span class="tag mb-6">{translatedCategory}</span>
+          <h1 class="font-serif text-4xl md:text-5xl text-neutral-900 mb-4">{translatedTitle}</h1>
+          <p class="text-xl text-neutral-500 mb-8">{work.data.year}</p>
+          
+          <p class="text-lg text-neutral-600 leading-relaxed mb-8">
+            {translatedDescription}
+          </p>
+          
+          <!-- Technical Details -->
+          <div class="border-t border-neutral-200 pt-8 space-y-4">
+            <div class="flex justify-between">
+              <span class="text-sm text-neutral-500 uppercase tracking-wider">{tr.obraDetalle.dimensiones}</span>
+              <span class="text-neutral-900">{work.data.dimensions}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sm text-neutral-500 uppercase tracking-wider">{tr.obraDetalle.tecnica}</span>
+              <span class="text-neutral-900">{work.data.technique}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-sm text-neutral-500 uppercase tracking-wider">{tr.obraDetalle.disponibilidad}</span>
+              <span class:list={[
+                work.data.available ? 'text-green-600' : 'text-neutral-400'
+              ]}>
+                {work.data.available ? tr.obraDetalle.disponible : tr.obraDetalle.vendida}
+              </span>
+            </div>
+          </div>
+          
+          <!-- CTA -->
+          <div class="mt-10">
+            <a href="/en/contact" class="btn-primary">
+              {tr.obraDetalle.consultarObra}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Other Works -->
+  <section class="section bg-neutral-50">
+    <div class="container-custom">
+      <h2 class="text-center text-neutral-900 mb-12">{tr.obraDetalle.otrasObras}</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {allWorks.filter(w => w.slug !== work.slug).slice(0, 4).map(otherWork => (
+          <a href={`/en/work/${otherWork.slug}`} class="group relative aspect-square overflow-hidden">
+            <img 
+              src={otherWork.data.coverImage} 
+              alt={otherWork.data.title}
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300"></div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

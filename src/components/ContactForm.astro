@@ -1,0 +1,154 @@
+---
+/**
+ * Componente ContactForm
+ *
+ * Formulario de contacto minimalista usando Web3Forms (serverless).
+ * Diseño inspirado en galerías de arte.
+ * Soporta múltiples idiomas.
+ */
+import { type Language, translations } from "../i18n";
+
+interface Props {
+	accessKey?: string;
+	lang?: Language;
+}
+
+// La clave de API se puede configurar desde Keystatic o variables de entorno
+const {
+	accessKey = import.meta.env.WEB3FORMS_ACCESS_KEY || "YOUR_ACCESS_KEY",
+	lang = "es",
+} = Astro.props;
+
+const tr = translations[lang];
+const redirectPath = lang === "es" ? "/contacto/gracias" : "/en/contact/thanks";
+
+/** Opciones del select traducidas */
+const subjectOptions =
+	lang === "es"
+		? [
+				{ value: "consulta", label: "Consulta sobre una obra" },
+				{ value: "proyecto", label: "Proyecto personalizado" },
+				{ value: "colaboracion", label: "Colaboración artística" },
+				{ value: "otro", label: "Otro" },
+			]
+		: [
+				{ value: "inquiry", label: "Inquiry about a piece" },
+				{ value: "project", label: "Custom project" },
+				{ value: "collaboration", label: "Artistic collaboration" },
+				{ value: "other", label: "Other" },
+			];
+---
+
+<form 
+  action="https://api.web3forms.com/submit" 
+  method="POST" 
+  class="space-y-0"
+  id="contact-form"
+>
+  <!-- Access Key (oculta) -->
+  <input type="hidden" name="access_key" value={accessKey} />
+  
+  <!-- Honeypot para anti-spam -->
+  <input type="checkbox" name="botcheck" class="hidden" style="display: none;" />
+  
+  <!-- Asunto del email -->
+  <input type="hidden" name="subject" value={lang === 'es' ? 'Nuevo mensaje desde raissagr.com' : 'New message from raissagr.com'} />
+  
+  <!-- Redirección después de envío -->
+  <input type="hidden" name="redirect" value={`${Astro.url.origin}${redirectPath}`} />
+  
+  <!-- Nombre -->
+  <div class="form-group">
+    <label for="name" class="form-label">
+      {tr.contacto.nombreLabel}
+    </label>
+    <input
+      type="text"
+      id="name"
+      name="name"
+      required
+      autocomplete="name"
+      placeholder={tr.contacto.nombrePlaceholder}
+      class="form-input"
+    />
+  </div>
+  
+  <!-- Email -->
+  <div class="form-group">
+    <label for="email" class="form-label">
+      {tr.contacto.emailLabel}
+    </label>
+    <input
+      type="email"
+      id="email"
+      name="email"
+      required
+      autocomplete="email"
+      placeholder={tr.contacto.emailPlaceholder}
+      class="form-input"
+    />
+  </div>
+  
+  <!-- Asunto -->
+  <div class="form-group">
+    <label for="subject-field" class="form-label">
+      {lang === 'es' ? 'Asunto' : 'Subject'}
+    </label>
+    <select
+      id="subject-field"
+      name="subject_field"
+      class="form-input cursor-pointer"
+    >
+      {subjectOptions.map(option => (
+        <option value={option.value}>{option.label}</option>
+      ))}
+    </select>
+  </div>
+  
+  <!-- Mensaje -->
+  <div class="form-group">
+    <label for="message" class="form-label">
+      {tr.contacto.mensajeLabel}
+    </label>
+    <textarea
+      id="message"
+      name="message"
+      required
+      rows="4"
+      placeholder={tr.contacto.mensajePlaceholder}
+      class="form-textarea"
+    ></textarea>
+  </div>
+  
+  <!-- Botón de envío -->
+  <button
+    type="submit"
+    class="btn-primary w-full mt-8"
+  >
+    {tr.contacto.enviar}
+  </button>
+  
+  <!-- Nota de privacidad -->
+  <p class="text-xs text-neutral-400 mt-4 text-center">
+    {lang === 'es' 
+      ? 'Al enviar, aceptas que me ponga en contacto contigo por email.'
+      : 'By submitting, you agree that I may contact you by email.'}
+  </p>
+</form>
+
+<style>
+  /* Estilos específicos del formulario */
+  .form-input:focus,
+  .form-textarea:focus {
+    outline: none;
+  }
+  
+  select.form-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23737373'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0 center;
+    background-size: 1.25rem;
+    padding-right: 2rem;
+  }
+</style>
