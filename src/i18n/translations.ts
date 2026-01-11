@@ -402,6 +402,46 @@ export function getLangFromUrl(url: URL): Language {
 }
 
 /**
+ * Mapa de traducción de rutas entre español e inglés
+ * Clave: ruta en español, Valor: ruta en inglés
+ */
+const routeTranslations: Record<string, string> = {
+	'/contacto': '/contact',
+	'/sobre-mi': '/about',
+	'/obra': '/work',
+};
+
+/**
+ * Traduce una ruta del idioma origen al destino
+ * @param path - Ruta a traducir (sin prefijo de idioma)
+ * @param fromLang - Idioma origen
+ * @param toLang - Idioma destino
+ * @returns Ruta traducida
+ */
+function translateRoute(path: string, fromLang: Language, toLang: Language): string {
+	// Quitar trailing slash para comparación (excepto root)
+	const cleanPath = path.endsWith('/') && path !== '/' ? path.slice(0, -1) : path;
+	
+	if (fromLang === 'es' && toLang === 'en') {
+		// Buscar traducción directa
+		for (const [esRoute, enRoute] of Object.entries(routeTranslations)) {
+			if (cleanPath === esRoute || cleanPath.startsWith(`${esRoute}/`)) {
+				return cleanPath.replace(esRoute, enRoute);
+			}
+		}
+	} else if (fromLang === 'en' && toLang === 'es') {
+		// Buscar traducción inversa
+		for (const [esRoute, enRoute] of Object.entries(routeTranslations)) {
+			if (cleanPath === enRoute || cleanPath.startsWith(`${enRoute}/`)) {
+				return cleanPath.replace(enRoute, esRoute);
+			}
+		}
+	}
+	
+	return path;
+}
+
+/**
  * Genera la URL equivalente en otro idioma
  * @param url - URL actual
  * @param lang - Idioma destino
@@ -410,6 +450,11 @@ export function getLangFromUrl(url: URL): Language {
 export function getLocalizedUrl(url: URL, lang: Language): string {
 	const pathname = url.pathname;
 	const currentLang = getLangFromUrl(url);
+	
+	// Si ya estamos en el idioma destino, devolver la misma URL
+	if (currentLang === lang) {
+		return pathname;
+	}
 	
 	// Obtener el base path de la configuración (ej: /raissa-portfolio)
 	const base = import.meta.env.BASE_URL || '/';
@@ -421,25 +466,20 @@ export function getLocalizedUrl(url: URL, lang: Language): string {
 		relativePath = pathname.slice(normalizedBase.length) || '/';
 	}
 
-	// Si estamos en español (idioma por defecto), las rutas no tienen prefijo
-	// Si estamos en inglés, las rutas tienen /en/ prefijo
-
 	let newRelativePath: string;
 	
 	if (currentLang === defaultLang) {
-		// Estamos en español, añadir prefijo si vamos a inglés
-		if (lang === "en") {
-			newRelativePath = `/en${relativePath === '/' ? '' : relativePath}`;
-		} else {
-			newRelativePath = relativePath;
-		}
+		// Estamos en español (sin prefijo), vamos a inglés
+		// 1. Traducir la ruta (ej: /contacto -> /contact)
+		const translatedPath = translateRoute(relativePath, 'es', 'en');
+		// 2. Añadir prefijo /en
+		newRelativePath = `/en${translatedPath === '/' ? '' : translatedPath}`;
 	} else {
-		// Estamos en inglés, quitar prefijo si vamos a español
-		if (lang === defaultLang) {
-			newRelativePath = relativePath.replace(/^\/en/, "") || "/";
-		} else {
-			newRelativePath = relativePath;
-		}
+		// Estamos en inglés (con prefijo /en), vamos a español
+		// 1. Quitar prefijo /en
+		const pathWithoutLang = relativePath.replace(/^\/en/, "") || "/";
+		// 2. Traducir la ruta (ej: /contact -> /contacto)
+		newRelativePath = translateRoute(pathWithoutLang, 'en', 'es');
 	}
 	
 	// Reconstruir la URL completa con el base path
