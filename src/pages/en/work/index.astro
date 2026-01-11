@@ -7,7 +7,7 @@ import { translations } from "../../../i18n";
  * Displays the complete gallery with category filtering.
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { url } from "../../../utils/paths";
+import { url, resolveImage } from "../../../utils/paths";
 
 const lang = "en";
 const tr = translations[lang];
@@ -115,7 +115,7 @@ const worksTranslated = allWorks.map((work) => ({
                                   work.data.category === 'Sculpture' || work.data.category === 'Escultura' ? 'escultura' : 'all'}
             >
               <img 
-                src={work.data.coverImage} 
+                src={resolveImage(work.data.coverImage)} 
                 alt={work.data.title}
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"

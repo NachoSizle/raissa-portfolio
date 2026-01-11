@@ -6,7 +6,7 @@ import { allWorks } from "../../data/works";
  * Muestra la galería completa de obras con filtrado por categoría.
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { url } from "../../utils/paths";
+import { url, resolveImage } from "../../utils/paths";
 
 /**
  * Categorías disponibles para filtrado
@@ -86,7 +86,7 @@ const categories = [
               data-work-category={work.data.category.toLowerCase().replace(/\s+/g, '-')}
             >
               <img 
-                src={work.data.coverImage} 
+                src={resolveImage(work.data.coverImage)} 
                 alt={work.data.title}
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 loading="lazy"

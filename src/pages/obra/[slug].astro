@@ -6,7 +6,7 @@ import { allWorks } from "../../data/works";
  * Muestra los detalles de una obra individual.
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { url } from "../../utils/paths";
+import { url, resolveImage } from "../../utils/paths";
 
 export async function getStaticPaths() {
 	return allWorks.map((work) => ({
@@ -21,7 +21,7 @@ const { work } = Astro.props;
 <BaseLayout 
   title={`${work.data.title} | raissagr`}
   description={work.data.description}
-  image={work.data.coverImage}
+  image={resolveImage(work.data.coverImage)}
 >
   <!-- Navegación de vuelta -->
   <section class="py-8 border-b border-neutral-100">
@@ -42,7 +42,7 @@ const { work } = Astro.props;
         <!-- Imagen -->
         <div class="relative">
           <img 
-            src={work.data.coverImage} 
+            src={resolveImage(work.data.coverImage)} 
             alt={work.data.title}
             class="w-full aspect-[4/5] object-cover"
           />
@@ -98,7 +98,7 @@ const { work } = Astro.props;
         {allWorks.filter(w => w.slug !== work.slug).slice(0, 4).map(otherWork => (
           <a href={url(`obra/${otherWork.slug}`)} class="group relative aspect-square overflow-hidden">
             <img 
-              src={otherWork.data.coverImage} 
+              src={resolveImage(otherWork.data.coverImage)} 
               alt={otherWork.data.title}
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"

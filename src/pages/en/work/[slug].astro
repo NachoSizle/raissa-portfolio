@@ -7,7 +7,7 @@ import { translations } from "../../../i18n";
  * Displays individual work details with translated content.
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { url } from "../../../utils/paths";
+import { url, resolveImage } from "../../../utils/paths";
 
 const lang = "en";
 const tr = translations[lang];
@@ -42,7 +42,7 @@ const translatedCategory =
 <BaseLayout 
   title={`${translatedTitle} | raissagr`}
   description={translatedDescription}
-  image={work.data.coverImage}
+  image={resolveImage(work.data.coverImage)}
 >
   <!-- Back Navigation -->
   <section class="py-8 border-b border-neutral-100">
@@ -63,7 +63,7 @@ const translatedCategory =
         <!-- Image -->
         <div class="relative">
           <img 
-            src={work.data.coverImage} 
+            src={resolveImage(work.data.coverImage)} 
             alt={translatedTitle}
             class="w-full aspect-[4/5] object-cover"
           />
@@ -119,7 +119,7 @@ const translatedCategory =
         {allWorks.filter(w => w.slug !== work.slug).slice(0, 4).map(otherWork => (
           <a href={url(`en/work/${otherWork.slug}`)} class="group relative aspect-square overflow-hidden">
             <img 
-              src={otherWork.data.coverImage} 
+              src={resolveImage(otherWork.data.coverImage)} 
               alt={otherWork.data.title}
               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
