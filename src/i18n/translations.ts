@@ -381,7 +381,20 @@ export function t(lang: Language, key: string): string {
  * @returns El idioma detectado o el por defecto
  */
 export function getLangFromUrl(url: URL): Language {
-	const [, lang] = url.pathname.split("/");
+	const pathname = url.pathname;
+	
+	// Obtener el base path de la configuración (ej: /raissa-portfolio)
+	const base = import.meta.env.BASE_URL || '/';
+	const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
+	
+	// Quitar el base path del pathname para trabajar con rutas relativas
+	let relativePath = pathname;
+	if (normalizedBase && normalizedBase !== '/' && pathname.startsWith(normalizedBase)) {
+		relativePath = pathname.slice(normalizedBase.length) || '/';
+	}
+	
+	// Ahora buscar el idioma en la ruta relativa
+	const [, lang] = relativePath.split("/");
 	if (lang in languages) {
 		return lang as Language;
 	}
@@ -397,23 +410,43 @@ export function getLangFromUrl(url: URL): Language {
 export function getLocalizedUrl(url: URL, lang: Language): string {
 	const pathname = url.pathname;
 	const currentLang = getLangFromUrl(url);
+	
+	// Obtener el base path de la configuración (ej: /raissa-portfolio)
+	const base = import.meta.env.BASE_URL || '/';
+	const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
+	
+	// Quitar el base path del pathname para trabajar con rutas relativas
+	let relativePath = pathname;
+	if (normalizedBase && normalizedBase !== '/' && pathname.startsWith(normalizedBase)) {
+		relativePath = pathname.slice(normalizedBase.length) || '/';
+	}
 
 	// Si estamos en español (idioma por defecto), las rutas no tienen prefijo
 	// Si estamos en inglés, las rutas tienen /en/ prefijo
 
+	let newRelativePath: string;
+	
 	if (currentLang === defaultLang) {
 		// Estamos en español, añadir prefijo si vamos a inglés
 		if (lang === "en") {
-			return `/en${pathname}`;
+			newRelativePath = `/en${relativePath === '/' ? '' : relativePath}`;
+		} else {
+			newRelativePath = relativePath;
 		}
-		return pathname;
 	} else {
 		// Estamos en inglés, quitar prefijo si vamos a español
 		if (lang === defaultLang) {
-			return pathname.replace(/^\/en/, "") || "/";
+			newRelativePath = relativePath.replace(/^\/en/, "") || "/";
+		} else {
+			newRelativePath = relativePath;
 		}
-		return pathname;
 	}
+	
+	// Reconstruir la URL completa con el base path
+	if (normalizedBase && normalizedBase !== '/') {
+		return `${normalizedBase}${newRelativePath}`;
+	}
+	return newRelativePath;
 }
 
 /**
