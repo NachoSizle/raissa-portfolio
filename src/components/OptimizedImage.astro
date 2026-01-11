@@ -1,10 +1,10 @@
 ---
 /**
  * Componente OptimizedImage
- * 
+ *
  * Imagen optimizada con lazy loading nativo, placeholder blur,
  * y soporte para formatos modernos (WebP, AVIF).
- * 
+ *
  * @param {string} src - Ruta de la imagen
  * @param {string} alt - Texto alternativo (obligatorio para SEO)
  * @param {string} class - Clases CSS adicionales
@@ -15,32 +15,32 @@
  * @param {boolean} priority - Si es true, precarga la imagen (para LCP)
  */
 interface Props {
-  src: string;
-  alt: string;
-  class?: string;
-  loading?: 'lazy' | 'eager';
-  decoding?: 'async' | 'sync' | 'auto';
-  width?: number;
-  height?: number;
-  priority?: boolean;
-  sizes?: string;
+	src: string;
+	alt: string;
+	class?: string;
+	loading?: "lazy" | "eager";
+	decoding?: "async" | "sync" | "auto";
+	width?: number;
+	height?: number;
+	priority?: boolean;
+	sizes?: string;
 }
 
 const {
-  src,
-  alt,
-  class: className = '',
-  loading = 'lazy',
-  decoding = 'async',
-  width,
-  height,
-  priority = false,
-  sizes = '100vw',
+	src,
+	alt,
+	class: className = "",
+	loading = "lazy",
+	decoding = "async",
+	width,
+	height,
+	priority = false,
+	sizes = "100vw",
 } = Astro.props;
 
 // Si es priority, usar eager loading
-const actualLoading = priority ? 'eager' : loading;
-const fetchPriority = priority ? 'high' : 'auto';
+const actualLoading = priority ? "eager" : loading;
+const fetchPriority = priority ? "high" : "auto";
 ---
 
 {priority && (
