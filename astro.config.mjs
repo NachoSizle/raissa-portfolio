@@ -8,9 +8,9 @@ import compressor from 'astro-compressor';
 
 // https://astro.build/config
 export default defineConfig({
-  // Para GitHub Pages: cambiar a la URL del repositorio si no tienes dominio personalizado
-  // Ejemplo: 'https://nachosizle.github.io/raissa-portfolio'
-  site: 'https://raissagr.com',
+  // GitHub Pages URL (sin dominio personalizado usa subdirectorio)
+  site: 'https://nachosizle.github.io',
+  base: '/raissa-portfolio',
   
   // Output estático para GitHub Pages (sin Keystatic CMS)
   output: 'static',
