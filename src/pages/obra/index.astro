@@ -6,6 +6,7 @@ import { allWorks } from "../../data/works";
  * Muestra la galería completa de obras con filtrado por categoría.
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { url } from "../../utils/paths";
 
 /**
  * Categorías disponibles para filtrado
@@ -80,7 +81,7 @@ const categories = [
         <div id="works-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {allWorks.map((work) => (
             <a 
-              href={`/obra/${work.slug}`} 
+              href={url(`obra/${work.slug}`)} 
               class="gallery-item group relative aspect-[4/3] overflow-hidden block"
               data-work-category={work.data.category.toLowerCase().replace(/\s+/g, '-')}
             >
@@ -118,10 +119,10 @@ const categories = [
               Mientras tanto, puedes contactarme para conocer más sobre mi trabajo.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/keystatic" class="btn-primary">
+              <a href={url("keystatic")} class="btn-primary">
                 Añadir obra
               </a>
-              <a href="/contacto" class="btn-outline">
+              <a href={url("contacto")} class="btn-outline">
                 Contactar
               </a>
             </div>
@@ -139,7 +140,7 @@ const categories = [
         Si alguna obra ha captado tu atención o deseas encargar un proyecto personalizado, 
         estaré encantada de conversar contigo.
       </p>
-      <a href="/contacto" class="btn-primary">
+      <a href={url("contacto")} class="btn-primary">
         Contactar
       </a>
     </div>
@@ -154,8 +155,8 @@ const categories = [
    * las obras según la categoría seleccionada.
    */
   document.addEventListener('astro:page-load', () => {
-    const filterButtons = document.querySelectorAll('[data-category]');
-    const galleryItems = document.querySelectorAll('[data-work-category]');
+    const filterButtons = document.querySelectorAll<HTMLElement>('[data-category]');
+    const galleryItems = document.querySelectorAll<HTMLElement>('[data-work-category]');
     
     if (!filterButtons.length || !galleryItems.length) return;
     

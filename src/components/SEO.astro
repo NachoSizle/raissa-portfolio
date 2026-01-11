@@ -92,7 +92,7 @@ const alternateLang = lang === "es" ? "en" : "es";
 <meta name="twitter:image:alt" content={title} />
 
 <!-- Schema.org JSON-LD para artistas -->
-<script type="application/ld+json" set:html={JSON.stringify({
+<script is:inline type="application/ld+json" set:html={JSON.stringify({
 	"@context": "https://schema.org",
 	"@type": "Person",
 	"name": "Raissa García",

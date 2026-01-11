@@ -1,10 +1,12 @@
 ---
 import { getLangFromUrl, translations } from "../i18n";
 import LanguageSelector from "./LanguageSelector.astro";
+import { url, getBase } from "../utils/paths";
 
 const currentPath = Astro.url.pathname;
 const lang = getLangFromUrl(Astro.url);
 const tr = translations[lang];
+const base = getBase();
 
 /**
  * Enlaces de navegación según el idioma
@@ -12,17 +14,17 @@ const tr = translations[lang];
 const navLinks =
 	lang === "es"
 		? [
-				{ href: "/obra", label: tr.nav.obra },
-				{ href: "/sobre-mi", label: tr.nav.sobreMi },
-				{ href: "/contacto", label: tr.nav.contacto },
+				{ href: url("obra"), label: tr.nav.obra },
+				{ href: url("sobre-mi"), label: tr.nav.sobreMi },
+				{ href: url("contacto"), label: tr.nav.contacto },
 			]
 		: [
-				{ href: "/en/work", label: tr.nav.obra },
-				{ href: "/en/about", label: tr.nav.sobreMi },
-				{ href: "/en/contact", label: tr.nav.contacto },
+				{ href: url("en/work"), label: tr.nav.obra },
+				{ href: url("en/about"), label: tr.nav.sobreMi },
+				{ href: url("en/contact"), label: tr.nav.contacto },
 			];
 
-const homeLink = lang === "es" ? "/" : "/en";
+const homeLink = lang === "es" ? base : url("en");
 
 /**
  * Determina si un enlace está activo
@@ -30,10 +32,8 @@ const homeLink = lang === "es" ? "/" : "/en";
  * @returns boolean
  */
 function isActive(href: string): boolean {
-	if (href === "/" || href === "/en") {
-		return (
-			currentPath === "/" || currentPath === "/en" || currentPath === "/en/"
-		);
+	if (href === base || href === url("en")) {
+		return currentPath === base || currentPath === url("en") || currentPath === `${url("en")}/`;
 	}
 	return currentPath.startsWith(href);
 }

@@ -6,6 +6,7 @@
  * Diseño inspirado en raissagr.com
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { url, resolveImage } from "../utils/paths";
 
 /**
  * Exposiciones y logros destacados
@@ -51,7 +52,7 @@ const techniques = ["Óleo", "Acrílico", "Técnica mixta", "Madera", "Escultura
         <div class="relative">
           <div class="aspect-[4/5] bg-neutral-100 overflow-hidden">
             <img 
-              src="/images/raissa-garcia.jpg" 
+              src={resolveImage("images/raissa-garcia.jpg")} 
               alt="Raissa García - Artista Visual" 
               class="w-full h-full object-cover object-top"
             />
@@ -171,10 +172,10 @@ const techniques = ["Óleo", "Acrílico", "Técnica mixta", "Madera", "Escultura
         y colaboraciones artísticas.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/obra" class="btn-primary">
+        <a href={url("obra")} class="btn-primary">
           Ver obra
         </a>
-        <a href="/contacto" class="btn-outline">
+        <a href={url("contacto")} class="btn-outline">
           Contactar
         </a>
       </div>

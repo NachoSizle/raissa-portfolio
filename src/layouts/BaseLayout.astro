@@ -11,6 +11,7 @@ import Footer from "../components/Footer.astro";
 import Navbar from "../components/Navbar.astro";
 import SEO from "../components/SEO.astro";
 import { getLangFromUrl } from "../i18n";
+import { resolveImage } from "../utils/paths";
 
 interface Props {
 	title: string;
@@ -43,8 +44,8 @@ const lang = getLangFromUrl(Astro.url);
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={resolveImage("favicon.svg")} />
+    <link rel="apple-touch-icon" sizes="180x180" href={resolveImage("favicon.svg")} />
     
     <!-- Meta generador -->
     <meta name="generator" content={Astro.generator} />

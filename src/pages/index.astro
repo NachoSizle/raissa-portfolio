@@ -6,6 +6,7 @@
  * Colores: Negro, blanco y acento rosa (#EA559D)
  */
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { url, resolveImage } from "../utils/paths";
 
 const siteUrl = import.meta.env.SITE || "https://raissagr.com";
 
@@ -54,13 +55,13 @@ const testimonials = [
 		quote:
 			"Sus piezas tienen una fuerza silenciosa que te atrapa. No buscan explicarse, sino sentirse, y transforma por completo la energía del lugar.",
 		author: "Coleccionista privado",
-		image: "/images/testimonial-01.jpg",
+		image: resolveImage("images/testimonial-01.jpg"),
 	},
 	{
 		quote:
 			"Las obras de Raissa transmiten una sensibilidad única; cada pieza invita a detenerse y sentir.",
 		author: "@albittfckb_",
-		image: "/images/testimonial-02.jpg",
+		image: resolveImage("images/testimonial-02.jpg"),
 	},
 ];
 ---
@@ -76,7 +77,7 @@ const testimonials = [
     <!-- Imagen de fondo -->
     <div class="absolute inset-0">
       <img 
-        src="/images/hero-artwork-full.jpg" 
+        src={resolveImage("images/hero-artwork-full.jpg")}
         alt="Obra de Raissa García - Arte contemporáneo" 
         class="w-full h-full object-cover"
         loading="eager"
@@ -99,17 +100,17 @@ const testimonials = [
         </h2>
         
         <!-- Descripción -->
-        <p class="text-lg text-neutral-600 max-w-xl mb-10 animate-fade-up delay-200 leading-relaxed">
+        <p class="text-lg text-black md:text-neutral-600 max-w-xl mb-10 animate-fade-up delay-200 leading-relaxed">
           En esta web encontrarás obras originales, proyectos personalizados y una práctica artística 
           en constante investigación, pensada para quienes buscan piezas que resuenen más allá de la forma.
         </p>
         
         <!-- CTA -->
         <div class="flex flex-col sm:flex-row gap-4 animate-fade-up delay-300">
-          <a href="/obra" class="btn-primary">
+          <a href={url("obra")} class="btn-primary">
             Ver Obra
           </a>
-          <a href="/contacto" class="btn-outline">
+          <a href={url("contacto")} class="btn-outline">
             Contactar
           </a>
         </div>
@@ -174,7 +175,7 @@ const testimonials = [
             Bienvenido a mi espacio creativo.
           </p>
           
-          <a href="/sobre-mi" class="btn-link">
+          <a href={url("sobre-mi")} class="btn-link">
             Conocer más
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -185,7 +186,7 @@ const testimonials = [
         <!-- Imagen de Raissa -->
         <div class="relative">
           <img 
-            src="/images/raissa-garcia.jpg" 
+            src={resolveImage("images/raissa-garcia.jpg")}
             alt="Raissa García - Artista Visual" 
             class="w-full aspect-[4/5] object-cover"
           />
@@ -207,12 +208,12 @@ const testimonials = [
       <div class="gallery-grid">
         <div class="gallery-item">
           <img 
-            src="/images/hero-artwork-full.jpg" 
+            src={resolveImage("images/hero-artwork-full.jpg")}
             alt="Obra de Raissa García" 
             class="w-full h-full object-cover"
           />
         </div>
-        {[2, 3, 4, 5, 6].map((item) => (
+        {[2, 3, 4, 5, 6].map((_) => (
           <div class="gallery-item bg-neutral-100">
             <div class="w-full h-full flex items-center justify-center text-neutral-300">
               <svg class="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -224,7 +225,7 @@ const testimonials = [
       </div>
       
       <div class="text-center mt-12">
-        <a href="/obra" class="btn-primary">
+        <a href={url("obra")} class="btn-primary">
           Ver toda la obra
         </a>
       </div>
@@ -270,10 +271,10 @@ const testimonials = [
         como proyectos a medida o colaboraciones artísticas.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/obra" class="btn bg-white text-[#EA559D] hover:bg-neutral-100">
+        <a href={url("obra")} class="btn bg-white text-[#EA559D] hover:bg-neutral-100">
           Ver colecciones
         </a>
-        <a href="/contacto" class="btn border border-white/50 text-white hover:bg-white/10">
+        <a href={url("contacto")} class="btn border border-white/50 text-white hover:bg-white/10">
           Contactar
         </a>
       </div>

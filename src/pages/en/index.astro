@@ -7,6 +7,7 @@
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { translations } from "../../i18n";
+import { url, resolveImage } from "../../utils/paths";
 
 const lang = "en";
 const tr = translations[lang];
@@ -30,12 +31,12 @@ const testimonials = [
 	{
 		quote: tr.testimonials.t1Quote,
 		author: tr.testimonials.t1Author,
-		image: "/images/testimonial-01.jpg",
+		image: resolveImage("images/testimonial-01.jpg"),
 	},
 	{
 		quote: tr.testimonials.t2Quote,
 		author: tr.testimonials.t2Author,
-		image: "/images/testimonial-02.jpg",
+		image: resolveImage("images/testimonial-02.jpg"),
 	},
 ];
 ---
@@ -50,7 +51,7 @@ const testimonials = [
   <section class="min-h-screen flex items-center relative overflow-hidden">
     <div class="absolute inset-0">
       <img 
-        src="/images/hero-artwork-full.jpg" 
+        src={resolveImage("images/hero-artwork-full.jpg")} 
         alt="Artwork by Raissa García" 
         class="w-full h-full object-cover"
       />
@@ -67,15 +68,15 @@ const testimonials = [
           {tr.home.subtitle}
         </h2>
         
-        <p class="text-lg text-neutral-600 max-w-xl mb-10 animate-fade-up delay-200 leading-relaxed">
+        <p class="text-lg text-black md:text-neutral-600 max-w-xl mb-10 animate-fade-up delay-200 leading-relaxed">
           {tr.home.description}
         </p>
         
         <div class="flex flex-col sm:flex-row gap-4 animate-fade-up delay-300">
-          <a href="/en/work" class="btn-primary">
+          <a href={url("en/work")} class="btn-primary">
             {tr.home.verObra}
           </a>
-          <a href="/en/contact" class="btn-outline">
+          <a href={url("en/contact")} class="btn-outline">
             {tr.home.contactar}
           </a>
         </div>
@@ -134,7 +135,7 @@ const testimonials = [
             {tr.home.bienvenido}
           </p>
           
-          <a href="/en/about" class="btn-link">
+          <a href={url("en/about")} class="btn-link">
             {tr.home.conocerMas}
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -144,7 +145,7 @@ const testimonials = [
         
         <div class="relative">
           <img 
-            src="/images/raissa-garcia.jpg" 
+            src={resolveImage("images/raissa-garcia.jpg")} 
             alt="Raissa García - Visual Artist" 
             class="w-full aspect-[4/5] object-cover"
           />
@@ -165,12 +166,12 @@ const testimonials = [
       <div class="gallery-grid">
         <div class="gallery-item">
           <img 
-            src="/images/hero-artwork-full.jpg" 
+            src={resolveImage("images/hero-artwork-full.jpg")} 
             alt="Artwork by Raissa García" 
             class="w-full h-full object-cover"
           />
         </div>
-        {[2, 3, 4, 5, 6].map((item) => (
+        {[2, 3, 4, 5, 6].map((_) => (
           <div class="gallery-item bg-neutral-100">
             <div class="w-full h-full flex items-center justify-center text-neutral-300">
               <svg class="w-16 h-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -182,7 +183,7 @@ const testimonials = [
       </div>
       
       <div class="text-center mt-12">
-        <a href="/en/work" class="btn-primary">
+        <a href={url("en/work")} class="btn-primary">
           {tr.home.verTodaObra}
         </a>
       </div>
@@ -227,10 +228,10 @@ const testimonials = [
         {tr.home.estariaEncantada}
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/en/work" class="btn bg-white text-[#EA559D] hover:bg-neutral-100">
+        <a href={url("en/work")} class="btn bg-white text-[#EA559D] hover:bg-neutral-100">
           {tr.home.verTodaObra}
         </a>
-        <a href="/en/contact" class="btn border border-white/50 text-white hover:bg-white/10">
+        <a href={url("en/contact")} class="btn border border-white/50 text-white hover:bg-white/10">
           {tr.home.escribeme}
         </a>
       </div>

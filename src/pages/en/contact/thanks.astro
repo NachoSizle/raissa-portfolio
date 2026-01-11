@@ -6,6 +6,7 @@ import { translations } from "../../../i18n";
  * Displayed after submitting the contact form.
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { url } from "../../../utils/paths";
 
 const lang = "en";
 const tr = translations[lang];
@@ -37,10 +38,10 @@ const tr = translations[lang];
         </p>
         
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/en" class="btn-primary">
+          <a href={url("en")} class="btn-primary">
             {tr.contacto.volverInicio}
           </a>
-          <a href="/en/work" class="btn-outline">
+          <a href={url("en/work")} class="btn-outline">
             {tr.home.verObra}
           </a>
         </div>

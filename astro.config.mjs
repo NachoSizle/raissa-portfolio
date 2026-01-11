@@ -6,11 +6,15 @@ import markdoc from '@astrojs/markdoc';
 import react from '@astrojs/react';
 import compressor from 'astro-compressor';
 
+// Detectar si estamos en producción (GitHub Pages) o desarrollo
+const isProduction = process.env.NODE_ENV === 'production' || process.env.CI === 'true';
+
 // https://astro.build/config
 export default defineConfig({
   // GitHub Pages URL (sin dominio personalizado usa subdirectorio)
   site: 'https://nachosizle.github.io',
-  base: '/raissa-portfolio',
+  // Solo usar base path en producción para GitHub Pages
+  base: isProduction ? '/raissa-portfolio' : '/',
   
   // Output estático para GitHub Pages (sin Keystatic CMS)
   output: 'static',

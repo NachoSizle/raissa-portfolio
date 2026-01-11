@@ -3,6 +3,7 @@
  * Página de agradecimiento tras enviar el formulario de contacto.
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { url } from "../../utils/paths";
 ---
 
 <BaseLayout 
@@ -31,10 +32,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         </p>
         
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="/" class="btn-primary">
+          <a href={url("")} class="btn-primary">
             Volver al inicio
           </a>
-          <a href="/obra" class="btn-outline">
+          <a href={url("obra")} class="btn-outline">
             Ver obra
           </a>
         </div>

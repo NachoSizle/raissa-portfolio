@@ -7,6 +7,7 @@ import { translations } from "../../i18n";
  * Design inspired by raissagr.com
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { url, resolveImage } from "../../utils/paths";
 
 const lang = "en";
 const tr = translations[lang];
@@ -55,7 +56,7 @@ const techniques = ["Oil", "Acrylic", "Mixed media", "Wood", "Sculpture"];
         <div class="relative">
           <div class="aspect-[4/5] bg-neutral-100 overflow-hidden">
             <img 
-              src="/images/raissa-garcia.jpg" 
+              src={resolveImage("images/raissa-garcia.jpg")} 
               alt="Raissa García - Visual Artist" 
               class="w-full h-full object-cover object-top"
             />
@@ -169,10 +170,10 @@ const techniques = ["Oil", "Acrylic", "Mixed media", "Wood", "Sculpture"];
         and artistic collaborations.
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/en/work" class="btn-primary">
+        <a href={url("en/work")} class="btn-primary">
           {tr.home.verObra}
         </a>
-        <a href="/en/contact" class="btn-outline">
+        <a href={url("en/contact")} class="btn-outline">
           {tr.nav.contacto}
         </a>
       </div>

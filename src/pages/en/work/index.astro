@@ -7,6 +7,7 @@ import { translations } from "../../../i18n";
  * Displays the complete gallery with category filtering.
  */
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { url } from "../../../utils/paths";
 
 const lang = "en";
 const tr = translations[lang];
@@ -107,7 +108,7 @@ const worksTranslated = allWorks.map((work) => ({
         <div id="works-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {worksTranslated.map((work) => (
             <a 
-              href={`/en/work/${work.slug}`} 
+              href={url(`en/work/${work.slug}`)} 
               class="gallery-item group relative aspect-[4/3] overflow-hidden block"
               data-work-category={work.data.category === 'Mixed Media' || work.data.category === 'Técnica Mixta' ? 'técnica-mixta' :
                                   work.data.category === 'Painting' || work.data.category === 'Pintura' ? 'pintura' :
@@ -145,7 +146,7 @@ const worksTranslated = allWorks.map((work) => ({
               {tr.obra.galeriaVaciaDesc}
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="/en/contact" class="btn-outline">
+              <a href={url("en/contact")} class="btn-outline">
                 {tr.nav.contacto}
               </a>
             </div>
@@ -162,7 +163,7 @@ const worksTranslated = allWorks.map((work) => ({
       <p class="text-lg text-neutral-600 mb-8 max-w-xl mx-auto">
         {tr.obra.interesadoDesc}
       </p>
-      <a href="/en/contact" class="btn-primary">
+      <a href={url("en/contact")} class="btn-primary">
         {tr.nav.contacto}
       </a>
     </div>
@@ -177,8 +178,8 @@ const worksTranslated = allWorks.map((work) => ({
    * las obras según la categoría seleccionada.
    */
   document.addEventListener('astro:page-load', () => {
-    const filterButtons = document.querySelectorAll('[data-category]');
-    const galleryItems = document.querySelectorAll('[data-work-category]');
+    const filterButtons = document.querySelectorAll<HTMLElement>('[data-category]');
+    const galleryItems = document.querySelectorAll<HTMLElement>('[data-work-category]');
     
     if (!filterButtons.length || !galleryItems.length) return;
     

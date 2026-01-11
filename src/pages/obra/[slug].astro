@@ -6,6 +6,7 @@ import { allWorks } from "../../data/works";
  * Muestra los detalles de una obra individual.
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { url } from "../../utils/paths";
 
 export async function getStaticPaths() {
 	return allWorks.map((work) => ({
@@ -25,7 +26,7 @@ const { work } = Astro.props;
   <!-- Navegación de vuelta -->
   <section class="py-8 border-b border-neutral-100">
     <div class="container-custom">
-      <a href="/obra" class="inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-[#EA559D] transition-colors">
+      <a href={url("obra")} class="inline-flex items-center gap-2 text-sm text-neutral-500 hover:text-[#EA559D] transition-colors">
         <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
         </svg>
@@ -80,7 +81,7 @@ const { work } = Astro.props;
           
           <!-- CTA -->
           <div class="mt-10">
-            <a href="/contacto" class="btn-primary">
+            <a href={url("contacto")} class="btn-primary">
               Consultar sobre esta obra
             </a>
           </div>
@@ -95,7 +96,7 @@ const { work } = Astro.props;
       <h2 class="text-center text-neutral-900 mb-12">Otras obras</h2>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         {allWorks.filter(w => w.slug !== work.slug).slice(0, 4).map(otherWork => (
-          <a href={`/obra/${otherWork.slug}`} class="group relative aspect-square overflow-hidden">
+          <a href={url(`obra/${otherWork.slug}`)} class="group relative aspect-square overflow-hidden">
             <img 
               src={otherWork.data.coverImage} 
               alt={otherWork.data.title}
