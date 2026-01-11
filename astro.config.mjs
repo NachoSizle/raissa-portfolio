@@ -4,13 +4,16 @@ import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 import markdoc from '@astrojs/markdoc';
 import react from '@astrojs/react';
-import keystatic from '@keystatic/astro';
-import node from '@astrojs/node';
 import compressor from 'astro-compressor';
 
 // https://astro.build/config
 export default defineConfig({
+  // Para GitHub Pages: cambiar a la URL del repositorio si no tienes dominio personalizado
+  // Ejemplo: 'https://nachosizle.github.io/raissa-portfolio'
   site: 'https://raissagr.com',
+  
+  // Output estático para GitHub Pages (sin Keystatic CMS)
+  output: 'static',
 
   vite: {
     plugins: [tailwindcss()],
@@ -54,7 +57,6 @@ export default defineConfig({
     }),
     markdoc(),
     react(),
-    keystatic(),
     // Compresión de assets (HTML, CSS, JS)
     compressor({
       gzip: true,
@@ -72,8 +74,4 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'auto',
   },
-
-  adapter: node({
-    mode: 'standalone'
-  })
 });
