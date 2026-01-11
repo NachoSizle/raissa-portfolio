@@ -1,5 +1,4 @@
 ---
-import { translations } from "../../i18n";
 /**
  * Home Page - English Version
  *
@@ -7,9 +6,11 @@ import { translations } from "../../i18n";
  * Colors: Black, white and pink accent (#EA559D)
  */
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { translations } from "../../i18n";
 
 const lang = "en";
 const tr = translations[lang];
+const siteUrl = import.meta.env.SITE || 'https://raissagr.com';
 
 /**
  * Artistic work features
@@ -42,6 +43,8 @@ const testimonials = [
 <BaseLayout 
   title="raissagr | Visual Artist" 
   description="Art from emotion and matter. Portfolio of Raissa García, visual artist in Altea, Spain."
+  alternateUrl={siteUrl}
+  keywords="Raissa García, visual artist, contemporary art, painting, Altea, Spain, oil, acrylic, mixed media"
 >
   <!-- Hero Section -->
   <section class="min-h-screen flex items-center relative overflow-hidden">

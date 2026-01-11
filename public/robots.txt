@@ -1,0 +1,23 @@
+# robots.txt para raissagr.com
+# Portafolio de Raissa García - Artista Visual
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://raissagr.com/sitemap-index.xml
+
+# Bloquear acceso a páginas de administración
+Disallow: /keystatic/
+Disallow: /api/
+
+# Permitir todos los crawlers de imágenes
+User-agent: Googlebot-Image
+Allow: /images/
+
+# Crawl-delay para bots agresivos
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
