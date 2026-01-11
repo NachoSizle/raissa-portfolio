@@ -143,28 +143,43 @@ function isActive(href: string): boolean {
   /**
    * Script para el menú móvil
    * Maneja la apertura/cierre del menú en dispositivos móviles
+   * Usa astro:page-load para funcionar con View Transitions
    */
-  const menuButton = document.getElementById('mobile-menu-button');
-  const mobileMenu = document.getElementById('mobile-menu');
-  const menuIcon = menuButton?.querySelector('.menu-icon');
-  const closeIcon = menuButton?.querySelector('.close-icon');
-  
-  menuButton?.addEventListener('click', () => {
-    const isExpanded = menuButton.getAttribute('aria-expanded') === 'true';
+  function initMobileMenu() {
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = menuButton?.querySelector('.menu-icon');
+    const closeIcon = menuButton?.querySelector('.close-icon');
     
-    menuButton.setAttribute('aria-expanded', String(!isExpanded));
-    mobileMenu?.classList.toggle('hidden');
-    menuIcon?.classList.toggle('hidden');
-    closeIcon?.classList.toggle('hidden');
-  });
-  
-  // Cerrar menú al hacer clic en un enlace
-  mobileMenu?.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      mobileMenu.classList.add('hidden');
-      menuButton?.setAttribute('aria-expanded', 'false');
-      menuIcon?.classList.remove('hidden');
-      closeIcon?.classList.add('hidden');
+    if (!menuButton || !mobileMenu) return;
+    
+    // Limpiar event listeners anteriores clonando el botón
+    const newMenuButton = menuButton.cloneNode(true) as HTMLElement;
+    menuButton.parentNode?.replaceChild(newMenuButton, menuButton);
+    
+    const newMenuIcon = newMenuButton.querySelector('.menu-icon');
+    const newCloseIcon = newMenuButton.querySelector('.close-icon');
+    
+    newMenuButton.addEventListener('click', () => {
+      const isExpanded = newMenuButton.getAttribute('aria-expanded') === 'true';
+      
+      newMenuButton.setAttribute('aria-expanded', String(!isExpanded));
+      mobileMenu.classList.toggle('hidden');
+      newMenuIcon?.classList.toggle('hidden');
+      newCloseIcon?.classList.toggle('hidden');
     });
-  });
+    
+    // Cerrar menú al hacer clic en un enlace
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        newMenuButton.setAttribute('aria-expanded', 'false');
+        newMenuIcon?.classList.remove('hidden');
+        newCloseIcon?.classList.add('hidden');
+      });
+    });
+  }
+  
+  // Inicializar en carga inicial y después de cada navegación
+  document.addEventListener('astro:page-load', initMobileMenu);
 </script>
